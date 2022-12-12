@@ -1,0 +1,73 @@
+VOC:
+VOCdevkit     #根目录
+    ├── JPEGImages         # 存放源图片
+    │     ├── aaaa.jpg
+    │     ├── bbbb.jpg
+    │     └── cccc.jpg
+    ├── Annotations        # 存放xml文件，与JPEGImages中的图片一一对应，解释图片的内容等等
+    │     ├── aaaa.xml
+    │     ├── bbbb.xml
+    │     └── cccc.xml
+    └── ImageSets          # 不同任务数据集的划分方法
+        └── Main
+          ├── train.txt    # txt文件中每一行包含一个图片的名称
+          └── val.txt
+    ├── SegmentationClass         # 实例分割所需要用到的信息
+    ├── SegmentationObject        # 实例分割所需要用到的信息
+
+随机划分训练集和验证集，
+训练集的文件名列表存放在ImageSets/Main/train.txt，
+验证集的文件名列表存放在ImageSets/Main/val.txt。
+
+============================================================
+
+COCO:
+COCO_ROOT     #根目录
+    ├── annotations        # 存放json格式的标注
+    │     ├── instances_train2017.json
+    │     └── instances_val2017.json
+    └── train2022         # 存放图片文件
+    │     ├── 000000000001.jpg
+    │     ├── 000000000002.jpg
+    │     └── 000000000003.jpg
+    └── val2022
+          ├── 000000000004.jpg
+          └── 000000000005.jpg
+
+============================================================
+
+xml标注格式：
+<annotation>
+    <folder>VOC_ROOT</folder>
+    <filename>aaaa.jpg</filename>  # 文件名
+    <size>                         # 图像尺寸（长宽以及通道数）
+        <width>500</width>
+        <height>332</height>
+        <depth>3</depth>
+    </size>
+    <segmented>1</segmented>       # 是否用于分割（在图像物体识别中无所谓）
+    <object>                       # 检测到的物体
+        <name>horse</name>         # 物体类别
+        <pose>Unspecified</pose>   # 拍摄角度，如果是自己的数据集就Unspecified
+        <truncated>0</truncated>   # 是否被截断（0表示完整)
+        <difficult>0</difficult>   # 目标是否难以识别（0表示容易识别）
+        <bndbox>                   # bounding-box（包含左下角和右上角xy坐标）
+            <xmin>100</xmin>
+            <ymin>96</ymin>
+            <xmax>355</xmax>
+            <ymax>324</ymax>
+        </bndbox>
+    </object>
+    <object>                       # 检测到多个物体
+        <name>person</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>198</xmin>
+            <ymin>58</ymin>
+            <xmax>286</xmax>
+            <ymax>197</ymax>
+        </bndbox>
+    </object>
+</annotation>
