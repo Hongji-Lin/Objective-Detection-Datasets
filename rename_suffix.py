@@ -23,4 +23,4 @@ def change_suffix(file_dir, old_suffix, new_suffix):
 
 
 if __name__=='__main__':
-    change_suffix('work/voc_data/JPEGImages', '.JPG', '.jpg')
+    change_suffix('/home/lhj/Documents/GitHub/Objective-Detection-Datasets/demo/imgs1', '.png', '.jpg')

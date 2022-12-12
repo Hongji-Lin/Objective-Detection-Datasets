@@ -2,7 +2,7 @@
 # @author: Evan/Hongji-Lin
 # @file: xml_to_voc.py
 # @time: 2022/12/8 下午4:58
-# @desc: xml2voc
+# @desc: xml2voc 制作voc数据集
 
 import os
 import random
