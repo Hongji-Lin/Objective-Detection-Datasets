@@ -1,5 +1,8 @@
-# -*- coding=utf-8 -*-
-#!/usr/bin/python
+# encoding: utf-8
+# @author: Evan/Hongji-Lin
+# @file: xml_to_voc.py
+# @time: 2022/12/8 下午4:58
+# @desc: voc_to_coco 直接划分了训练集和验证集 好用 强推
 
 import sys
 import os
@@ -116,33 +119,34 @@ def convert(xml_list, xml_dir, json_file):
 
 
 if __name__ == '__main__':
-    root_path = './demo'
+    coco_json_path = './coco/annotations'
+    coco_train_path = 'coco/train2017'
+    coco_val_path = 'coco/val2017'
+    if not os.path.exists(coco_json_path):
+        os.makedirs(coco_json_path)
+    if not os.path.exists(coco_train_path):
+        os.makedirs(coco_train_path)
+    if not os.path.exists(coco_val_path):
+        os.makedirs(coco_val_path)
 
-    if not os.path.exists(os.path.join(root_path, 'coco2022/annotations')):
-        os.makedirs(os.path.join(root_path, 'coco2022/annotations'))
-    if not os.path.exists(os.path.join(root_path, 'coco/train')):
-        os.makedirs(os.path.join(root_path, 'coco2022/train'))
-    if not os.path.exists(os.path.join(root_path, 'coco/val')):
-        os.makedirs(os.path.join(root_path, 'coco2022/val'))
-    xml_dir = os.path.join(root_path, 'voc/Annotations')  # 已知的voc的标注
-
-    xml_labels = os.listdir(xml_dir)
+    voc_xml_dir = './data/voc/Annotations'  # 已知的voc的标注
+    xml_labels = os.listdir(voc_xml_dir)
     np.random.shuffle(xml_labels)
     split_point = int(len(xml_labels)/5)
 
+    imgs_path = './data/voc/JPEGImages'
     # validation data
     xml_list = xml_labels[0:split_point]
-    json_file = os.path.join(root_path,'coco2022/annotations/instances_val.json')
-    convert(xml_list, xml_dir, json_file)
+    val_json_file = './coco/annotations/instances_val.json'
+    convert(xml_list, voc_xml_dir, val_json_file)
     for xml_file in xml_list:
-        img_name = xml_file[:-4] + '.jpg'
-        shutil.copy(os.path.join(root_path, 'voc/JPEGImages', img_name),
-                    os.path.join(root_path, 'coco2022/val', img_name))
+        img_name = xml_file[:-4] + '.png'  # 可以改为png
+        shutil.copy(os.path.join(imgs_path, img_name), os.path.join(coco_val_path, img_name))
+
     # train data
     xml_list = xml_labels[split_point:]
-    json_file = os.path.join(root_path,'coco2022/annotations/instances_train.json')
-    convert(xml_list, xml_dir, json_file)
+    train_json_file = './coco/annotations/instances_train.json'
+    convert(xml_list, voc_xml_dir, train_json_file)
     for xml_file in xml_list:
-        img_name = xml_file[:-4] + '.jpg'
-        shutil.copy(os.path.join(root_path, 'voc/JPEGImages', img_name),
-                    os.path.join(root_path, 'coco2022/train', img_name))
+        img_name = xml_file[:-4] + '.png'   # 可以改为png
+        shutil.copy(os.path.join(imgs_path, img_name), os.path.join(coco_train_path, img_name))

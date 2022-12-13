@@ -224,8 +224,8 @@ def json_transform_xml(json_path, xml_path, process_mode="rectangle"):
 
 
 if __name__ == "__main__":
-    root_json_dir = '/data/VOCdevkit/json'           # 根据自己的json文件地址需要
-    root_save_xml_dir = '/data/VOCdevkit/xml'           # 根据自己要保存的xml文件地址修改
+    root_json_dir = '/VOC/json'  # 根据自己的json文件地址需要
+    root_save_xml_dir = '/VOC/xml'  # 根据自己要保存的xml文件地址修改
     for json_filename in tqdm(os.listdir(root_json_dir)):
         json_path = os.path.join(root_json_dir, json_filename)
         save_xml_path = os.path.join(root_save_xml_dir, json_filename.replace(".json", ".xml"))
